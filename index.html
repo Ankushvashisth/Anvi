@@ -5,12 +5,12 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Anvi E-commerce</title>
+        <title> Anvi-Ecommerce </title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
         <link rel="stylesheet" href="style.css">
     </head>
-
+    <title> Anvi-Ecommerce </title>
     <body>
         
 <section id="header">
@@ -522,6 +522,14 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="wheel-container">
+        <canvas id="wheel"></canvas>
+        <div class="arrow"></div>
+    </div>
+    <button id="spin" class="spin-btn">Spin</button>
+    <div id="result"   class="result"></div>
+</div>
 <footer class="section-p1">
     <div class="col">
         <img  class="logo" src="Anvi3.png" alt="">
@@ -616,7 +624,113 @@ document.getElementById('chatbot-input-field').addEventListener('keypress', func
     if (event.key === 'Enter') {
         document.getElementById('send-chatbot-message').click();
     }
+});const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+const spinBtn = document.getElementById('spin');
+const resultDiv = document.getElementById('result');
+
+canvas.width = 300;
+canvas.height = 300;
+
+const segments = [
+    '20% Cashback',
+    '35% OFF',
+    '30% Cashback',
+    '50% OFF',
+    '50% Cashback',
+    '70% OFF',
+    
+];
+const colors = [
+    '#088178',
+    '#e1e1e1',
+    '#063970',
+    '#1e81b0',
+    '#76b5c5',
+    '#abdbe3',
+    
+];
+let startAngle = 0;
+let arc = Math.PI / (segments.length / 2);
+let spinTimeout = null;
+let spinAngleStart = 10;
+let spinTime = 0;
+let spinTimeTotal = 0;
+
+function drawRouletteWheel() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.font = '14px Arial';
+
+    for (let i = 0; i < segments.length; i++) {
+        const angle = startAngle + i * arc;
+        ctx.fillStyle = colors[i];
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angle, angle + arc, false);
+        ctx.arc(canvas.width / 2, canvas.height / 2, 0, angle + arc, angle, true);
+        ctx.fill();
+        ctx.save();
+        ctx.fillStyle = 'black';
+        ctx.translate(
+            canvas.width / 2 + Math.cos(angle + arc / 2) * canvas.width / 3,
+            canvas.height / 2 + Math.sin(angle + arc / 2) * canvas.height / 3
+        );
+        ctx.rotate(angle + arc / 2 + Math.PI / 2);
+        const text = segments[i];
+        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+        ctx.restore();
+    }
+
+    // Draw arrow
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 - 10, 0);
+    ctx.lineTo(canvas.width / 2 + 10, 0);
+    ctx.lineTo(canvas.width / 2, 20);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function rotateWheel() {
+    spinTime += 30;
+    if (spinTime >= spinTimeTotal) {
+        stopRotateWheel();
+        return;
+    }
+    const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+    startAngle += (spinAngle * Math.PI) / 180;
+    drawRouletteWheel();
+    spinTimeout = setTimeout(rotateWheel, 30);
+}
+
+function stopRotateWheel() {
+    clearTimeout(spinTimeout);
+    const degrees = (startAngle * 180) / Math.PI + 90;
+    const arcd = (arc * 180) / Math.PI;
+    const index = Math.floor((360 - (degrees % 360)) / arcd);
+    ctx.save();
+    ctx.font = 'bold 24px Arial';
+    const text = segments[index];
+    resultDiv.innerText = `Congratulations! You won ${text}`;
+    ctx.restore();
+}
+
+function easeOut(t, b, c, d) {
+    const ts = (t /= d) * t;
+    const tc = ts * t;
+    return b + c * (tc + -3 * ts + 3 * t);
+}
+
+spinBtn.addEventListener('click', () => {
+    spinAngleStart = Math.random() * 10 + 10;
+    spinTime = 0;
+    spinTimeTotal = Math.random() * 3000 + 4000;
+    rotateWheel();
 });
+
+drawRouletteWheel();
+
         </script>
         <script src="script.js"></script>
     </body>
