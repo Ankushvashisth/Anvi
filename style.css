@@ -1343,6 +1343,17 @@ margin-bottom: 20px;
    .wheel-container {
  display:none;
    }
+  .arrow {
+      display:none;
+  }
+
+  .spin-btn {
+     display:none;
+  }
+
+  .result {
+     display:none;
+  }
 }
 
 @media (max-width: 480px) {
