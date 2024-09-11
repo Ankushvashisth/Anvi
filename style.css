@@ -1340,7 +1340,9 @@ margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
+   .wheel-container {
  display:none;
+   }
 }
 
 @media (max-width: 480px) {
