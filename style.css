@@ -1357,7 +1357,18 @@ margin-bottom: 20px;
 }
 
 @media (max-width: 480px) {
-.wheel-container {
+ .wheel-container {
  display:none;
    }
+  .arrow {
+      display:none;
+  }
+
+  .spin-btn {
+     display:none;
+  }
+
+  .result {
+     display:none;
+  }
 }
