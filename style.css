@@ -1362,33 +1362,5 @@ margin-bottom: 20px;
 }
 
 @media (max-width: 480px) {
-  body {
-      justify-content: center;
-  }
-
-  .container {
-      position: static;
-      transform: none;
-      margin-top: 20px; /* Added to ensure some space from the top */
-  }
-
-  .wheel-container {
-      width: 150px;
-      height: 150px;
-  }
-
-  .arrow {
-      border-left: 8px solid black;
-      border-top: 4px solid transparent;
-      border-bottom: 4px solid transparent;
-  }
-
-  .spin-btn {
-      font-size: 10px;
-      padding: 4px 8px;
-  }
-
-  .result {
-      font-size: 12px;
-  }
+ display:none;
 }
