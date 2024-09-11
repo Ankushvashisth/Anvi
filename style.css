@@ -1340,25 +1340,7 @@ margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
-  .wheel-container {
-      width: 200px;
-      height: 200px;
-  }
-
-  .arrow {
-      border-left: 10px solid black;
-      border-top: 5px solid transparent;
-      border-bottom: 5px solid transparent;
-  }
-
-  .spin-btn {
-      font-size: 12px;
-      padding: 6px 12px;
-  }
-
-  .result {
-      font-size: 14px;
-  }
+ display:none;
 }
 
 @media (max-width: 480px) {
