@@ -1346,5 +1346,7 @@ margin-bottom: 20px;
 }
 
 @media (max-width: 480px) {
+.wheel-container {
  display:none;
+   }
 }
