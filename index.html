@@ -13,7 +13,7 @@
     <title> Anvi-Ecommerce </title>
     <body>
         
-<section id="header">
+<section id="header" >
     <a href="#"><img src="Anvi3.png" class ="logo" alt=""></a>
     <div>
         <ul id="navbar">
@@ -36,6 +36,12 @@
     <h2>Super value deals</h2>
     <h1> On all products</h1>
     <p>Save more with coupons & up to 70% off!</p>
+    <div class="hero-slider">
+        <div class="slide active"><img src="hero2.jpg" alt="Slide 1"></div>
+        <div class="slide"><img src="hero3.jpg" alt="Slide 2"></div>
+       
+        
+    </div>
     <button>Shop Now</button>
 </section>
 <section id="feature" class="section-p1">
@@ -524,11 +530,11 @@
 </div>
 <div class="container">
     <div class="wheel-container">
-        <canvas id="wheel"></canvas>
-        <div class="arrow"></div>
+        <canvas id="wheel" width="250" height="250"></canvas>
+        <div id="arrow"></div>
+        <button id="spin" class="spin-btn">Spin</button>
     </div>
-    <button id="spin" class="spin-btn">Spin</button>
-    <div id="result"   class="result"></div>
+    <div id="result" class="result"></div>
 </div>
 <footer class="section-p1">
     <div class="col">
@@ -624,13 +630,14 @@ document.getElementById('chatbot-input-field').addEventListener('keypress', func
     if (event.key === 'Enter') {
         document.getElementById('send-chatbot-message').click();
     }
-});const canvas = document.getElementById('wheel');
+});
+const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 const spinBtn = document.getElementById('spin');
 const resultDiv = document.getElementById('result');
 
-canvas.width = 300;
-canvas.height = 300;
+canvas.width = 250;
+canvas.height = 250;
 
 const segments = [
     '20% Cashback',
@@ -638,17 +645,15 @@ const segments = [
     '30% Cashback',
     '50% OFF',
     '50% Cashback',
-    '70% OFF',
-    
+    '70% OFF'
 ];
 const colors = [
-    '#088178',
-    '#e1e1e1',
-    '#063970',
-    '#1e81b0',
-    '#76b5c5',
-    '#abdbe3',
-    
+    '#efccc3',
+    '#fbe9e5',
+    '#efccc3',
+    '#fbe9e5',
+    '#f8cbbc',
+    '#fbe9e5'
 ];
 let startAngle = 0;
 let arc = Math.PI / (segments.length / 2);
@@ -656,6 +661,7 @@ let spinTimeout = null;
 let spinAngleStart = 10;
 let spinTime = 0;
 let spinTimeTotal = 0;
+let spinning = false;
 
 function drawRouletteWheel() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -681,31 +687,23 @@ function drawRouletteWheel() {
         ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
         ctx.restore();
     }
-
-    // Draw arrow
-    ctx.fillStyle = 'black';
-    ctx.beginPath();
-    ctx.moveTo(canvas.width / 2 - 10, 0);
-    ctx.lineTo(canvas.width / 2 + 10, 0);
-    ctx.lineTo(canvas.width / 2, 20);
-    ctx.closePath();
-    ctx.fill();
 }
 
 function rotateWheel() {
-    spinTime += 30;
-    if (spinTime >= spinTimeTotal) {
-        stopRotateWheel();
-        return;
-    }
-    const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-    startAngle += (spinAngle * Math.PI) / 180;
+    startAngle += spinning ? 0.1 : 0.01;
     drawRouletteWheel();
-    spinTimeout = setTimeout(rotateWheel, 30);
+    requestAnimationFrame(rotateWheel);
+}
+
+function spin() {
+    spinning = true;
+    spinTime = 0;
+    spinTimeTotal = Math.random() * 2000 + 3000;
+    setTimeout(stopRotateWheel, spinTimeTotal);
 }
 
 function stopRotateWheel() {
-    clearTimeout(spinTimeout);
+    spinning = false;
     const degrees = (startAngle * 180) / Math.PI + 90;
     const arcd = (arc * 180) / Math.PI;
     const index = Math.floor((360 - (degrees % 360)) / arcd);
@@ -716,20 +714,35 @@ function stopRotateWheel() {
     ctx.restore();
 }
 
-function easeOut(t, b, c, d) {
-    const ts = (t /= d) * t;
-    const tc = ts * t;
-    return b + c * (tc + -3 * ts + 3 * t);
-}
-
 spinBtn.addEventListener('click', () => {
-    spinAngleStart = Math.random() * 10 + 10;
-    spinTime = 0;
-    spinTimeTotal = Math.random() * 3000 + 4000;
-    rotateWheel();
+    if (!spinning) {
+        spin();
+    }
 });
 
+rotateWheel();
 drawRouletteWheel();
+
+let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    setInterval(nextSlide, 2500);
+
 
         </script>
         <script src="script.js"></script>

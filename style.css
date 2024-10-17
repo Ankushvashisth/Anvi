@@ -89,7 +89,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px 80px;
-  background-color: #E3E6F3;
+  background-color: #fff;
   box-shadow: 0 5px 15px rgb(0, 0, 0,0.06);
   z-index: 999;
   position:sticky;
@@ -143,7 +143,7 @@ body {
 }
 
  #hero{
-  background-image: url("hero4\ .png");
+  position: relative;
   height: 90vh;
   width: 100%;
   background-size: cover;
@@ -155,12 +155,47 @@ body {
    justify-content: center;
 
  }
+ .hero-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide.active {
+  opacity: 1;
+}
  #hero h4 {
   padding-bottom: 15px;
+  z-index: 1;
 
  }
+ #hero p {
+  z-index: 1;
+ }
+ #hero h2{
+  z-index: 1;
+ }
+
  #hero h1 {
   color: #088178;
+  z-index: 1;
  }
  #hero button{
   background-image: url(button\ .png);
@@ -172,6 +207,7 @@ body {
   cursor: pointer;
   font-weight: 700;
   font-size:15px;
+  z-index: 1;
 
  }
  #feature .fe-box {
@@ -883,8 +919,8 @@ margin-right: 50px;
 }
 
 #page-header.blog-header {
-  background-image: url("b19.jpg");
-  height: 40vh;
+  background-image: url("hero.4.jpg");
+  height: 60vh;
   width: 100%;
   background-size: cover;
   display: flex;
@@ -961,7 +997,7 @@ margin-right: 50px;
   z-index: -9;
 }
 #page-header.about-header{
-  background-image: url("banner.png");
+  background-image: url("hero5.jpg");
 }
 #about-head img{
   width: 50%;
@@ -1272,20 +1308,20 @@ margin-bottom: 20px;
 }
 .container {
   position: fixed;
-  right: 50px;
-  top: 70%;
+  right: 10px;
+  top: 50%;
   transform: translateY(-50%);
   text-align: center;
 }
 
 .wheel-container {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   margin: 0 auto;
 }
 
-.arrow {
+#arrow {
   position: absolute;
   top: 50%;
   left: 100%;
@@ -1293,7 +1329,6 @@ margin-bottom: 20px;
   width: 0;
   height: 0;
   border-left: 20px solid black;
-
 }
 
 .spin-btn {
@@ -1308,67 +1343,17 @@ margin-bottom: 20px;
 }
 
 .spin-btn:hover {
-  background-color: #818ea0;
+  background-color: #218838;
 }
 
 .result {
-  margin-top: 35px;
+  margin-top: 80sspx;
   font-size: 18px;
   color: black;
 }
 
-@media (max-width: 1200px) {
-  .wheel-container {
-      width: 250px;
-      height: 250px;
-  }
-
-  .arrow {
-      border-left: 15px solid black;
-      border-top: 7px solid transparent;
-      border-bottom: 7px solid transparent;
-  }
-
-  .spin-btn {
-      font-size: 14px;
-      padding: 8px 16px;
-  }
-
-  .result {
-      font-size: 16px;
-  }
-}
-
 @media (max-width: 768px) {
-   .wheel-container {
- display:none;
-   }
-  .arrow {
-      display:none;
-  }
-
-  .spin-btn {
-     display:none;
-  }
-
-  .result {
-     display:none;
-  }
-}
-
-@media (max-width: 480px) {
- .wheel-container {
- display:none;
-   }
-  .arrow {
-      display:none;
-  }
-
-  .spin-btn {
-     display:none;
-  }
-
-  .result {
-     display:none;
+  .container {
+    display: none;
   }
 }
